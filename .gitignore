@@ -170,3 +170,4 @@ pip-log.txt
 *.~dfm
 *.~ddp
 *.~dsk
+*.exe

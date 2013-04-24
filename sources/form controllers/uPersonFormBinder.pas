@@ -13,18 +13,17 @@ type
 
 implementation
 
-{ TPersonFormMapper }
+{ TPersonFormBinder }
 class procedure TPersonFormBinder.PickForm(Form: TForm; Person: TPerson);
 begin
-  Person.FirstName := (Form as TPersonForm).FirstName;
-  Person.LastName := (Form as TPersonForm).LastName;
+  Person.Name := TPersonName.Create((Form as TPersonForm).FirstName, (Form as TPersonForm).LastName);
   Person.Birthdate := (Form as TPersonForm).Birthdate;
 end;
 
 class procedure TPersonFormBinder.PopulateForm(Form: TForm; Person: TPerson);
 begin
-  (Form as TPersonForm).FirstName := Person.FirstName;
-  (Form as TPersonForm).LastName := Person.LastName;
+  (Form as TPersonForm).FirstName := Person.Name.FirstName;
+  (Form as TPersonForm).LastName := Person.Name.LastName;
   (Form as TPersonForm).Birthdate := Person.Birthdate;
 end;
 

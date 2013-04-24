@@ -47,8 +47,7 @@ begin
     if Query.RecordCount > 1 then raise Exception.Create('Ошибка в TPersonMapper.LoadById: найдено несколько записей c id=' + IntToStr(Id));
 
     Person.Id := Query.FieldByName('id').AsInteger;
-    Person.FirstName := Query.FieldByName('first_name').AsString;
-    Person.LastName := Query.FieldByName('last_name').AsString;
+    Person.Name := TPersonName.Create (Query.FieldByName('first_name').AsString, Query.FieldByName('last_name').AsString);
     Person.Birthdate := Query.FieldByName('birthdate').AsDateTime;
   finally
     DestroyQuery(Query);
@@ -62,8 +61,8 @@ begin
   try
     Query.SQL.Text := 'update persons set first_name=:first_name, last_name=:last_name, birthdate=:birthdate where id=:id';
     Query.Parameters.ParamByName('id').Value := Person.Id;
-    Query.Parameters.ParamByName('first_name').Value := Person.FirstName;
-    Query.Parameters.ParamByName('last_name').Value := Person.LastName;
+    Query.Parameters.ParamByName('first_name').Value := Person.Name.FirstName;
+    Query.Parameters.ParamByName('last_name').Value := Person.Name.LastName;
     Query.Parameters.ParamByName('birthdate').Value := Person.Birthdate;
     try
       Query.ExecSQL;
